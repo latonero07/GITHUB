@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GRC Payroll Program</title>
+<style>
+body {
+background-color: #bd9cf7;
+font-family: Arial, sans-serif;
+text-align: center;
+}
+.form-container, .output-container {
+background-color: #6d96c4;
+border: 2px solid rgb(112, 210, 230);
+padding: 20px;
+width: 300px;
+margin: 50px auto;
+display: none;
+}
+input {
+width: 90%;
+padding: 8px;
+margin: 5px 0;
+}
+button {
+padding: 10px 20px;
+background-color: green;
+color: white;
+border: none;
+cursor: pointer;
+}
+.section {
+margin: 10px 0;
+}
+</style>
+</head>
+<body>
+
+<!
+-Input Form Section -->
+<div class="form-container" id="formSection">
+<h2>PAYROLL PROGRAM</h2>
+<form id="payrollForm">
+<input type="text" id="idNumber" placeholder="ID NUMBER" required><br>
+<input type="text" id="lastName" placeholder="LAST NAME" required><br>
+<input type="text" id="firstName" placeholder="FIRST NAME" required><br>
+<input type="text" id="middleName" placeholder="MIDDLE NAME" required><br>
+<input type="text" id="position" placeholder="POSITION" required><br>
+<input type="number" id="rate" placeholder="RATE" required><br>
+<input type="number" id="days" placeholder="WORK DAYS" required><br>
+<button type="submit">SUBMIT</button>
+</form>
+</div>
+<!
+-Output Display Section -->
+<div class="output-container" id="displaySection">
+<h2>Payroll Details</h2>
+<div id="output"></div>
+<button onclick="goBack()">BACK</button>
+</div>
+<script>
+// Show form on load
+document.getElementById('formSection').style.display = 'block';
+
+document.getElementById('payrollForm').addEventListener('submit', function(e) {
+e.preventDefault();
+
+const data = {
+idNumber: document.getElementById('idNumber').value,
+lastName: document.getElementById('lastName').value,
+firstName: document.getElementById('firstName').value,
+middleName: document.getElementById('middleName').value,
+position: document.getElementById('position').value,
+rate: parseFloat(document.getElementById('rate').value),
+days: parseInt(document.getElementById('days').value)
+};
+
+const grossPay = data.rate * data.days;
+const sss = grossPay * 0.05;
+const pagibig = grossPay * 0.03;
+const philhealth = grossPay * 0.02;
+const tax = grossPay * 0.05;
+const totalDeduction = sss + pagibig + philhealth + tax;
+const netPay = grossPay
+totalDeduction;
+document.getElementById('output').innerHTML = `
+<div class="section"><strong>ID:</strong> ${data.idNumber}</div>
+<div class="section"><strong>Name:</strong> ${data.lastName}, ${data.firstName} ${data.middleName}</div>
+<div class="section"><strong>Position:</strong> ${data.position}</div>
+<hr>
+<div class="section"><strong>Rate:</strong> ${data.rate}</div>
+<div class="section"><strong>Days:</strong> ${data.days}</div>
+<div class="section"><strong>Gross Pay:</strong> ${grossPay.toFixed(2)}</div>
+<hr>
+<div class="section"><strong>SSS (5%):</strong> ${sss.toFixed(2)}</div>
+<div class="section"><strong>Pag-ibig (3%):</strong> ${pagibig.toFixed(2)}</div>
+<div class="section"><strong>Philhealth (2%):</strong> ${philhealth.toFixed(2)}</div>
+<div class="section"><strong>Tax (5%):</strong> ${tax.toFixed(2)}</div>
+<div class="section"><strong>Total Deduction:</strong> ${totalDeduction.toFixed(2)}</div>
+<hr>
+<div class="section"><strong>Net Pay:</strong> ${netPay.toFixed(2)}</div>
+`;
+
+// Switch view
+document.getElementById('formSection').style.display = 'none';
+document.getElementById('displaySection').style.display = 'block';
+});
+
+function goBack() {
+document.getElementById('formSection').style.display = 'block';
+document.getElementById('displaySection').style.display = 'none';
+}
+</script>
+</body>
+</html
